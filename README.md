@@ -3,6 +3,7 @@ Version control repository for Project One CS 2334
 # Notes and Ideas
 1.Function for rules could be something like below (might be able to make shorter).
 ```
+//This tell you which index to lock at in a given rule by returning the index based on a calculation using the state of the 3 cells in consideration.
 rules(int leftCell, int targetCell, int rightCell){
 	int rulesIdx = (4 * leftCell + 2 * targetCell + rightCell);
 	return ruleNumber[7 - rulesIdx]; //this may be named differently I have not defined RuleNumber yet!
