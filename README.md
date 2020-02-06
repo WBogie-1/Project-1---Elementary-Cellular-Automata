@@ -11,6 +11,8 @@ rules(int leftCell, int targetCell, int rightCell){
 	}
 ```
 This works because you need an equation that given x + y + z = a number between zero and three where 0 <= variable <= 1 is true for all x y and z. You also know that this combination used in a form ax + by + cz <= 7 and >= 0. You also know that a + b = 6 when a(1) + b(1) + c(1) = 7. Assuming that c = 1 and that a != b the easiest solution to the system is (4,2), giving the multiple needed to complete the equation finding the targeted rule.
+```
+```
 #2.When using String.toBinaryString() you have to use a formatter like below
 ```
 //This is required because when outputting binary numbers as a string toBinaryString
