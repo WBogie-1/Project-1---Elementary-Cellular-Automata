@@ -21,7 +21,7 @@ public class Cell {
 		this.cellValue = value;
 	}
 	
-	//Helper for getcell in Automaton Class
+	//Helper for getcell in Automaton Class generation class
 	public String getCellState() {
 		String copyValue = this.cellValue;
 		return copyValue;

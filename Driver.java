@@ -21,20 +21,35 @@ public class Driver {
 		//Change Value of middle cell(WORKS)
 		B.setCellValue("2");
 		System.out.println(A.getCellState() + " " + B.getCellState() + " " + C.getCellState());
+		System.out.println();
 		
 		//Create a blank Generation for testing purposes(WORKS)
 		Generation Gen1 = new Generation();
 		System.out.println(Gen1); 
 		
 		//Create a generation Based on a given state (WORKS)
-		String Gen2GivenState = "101100010101100";
+		String Gen2GivenState = "000000010000000";
 		Generation Gen2 = new Generation(Gen2GivenState);
 		System.out.println(Gen2);
+		System.out.println();
 		
-		//Calculate a the wolfram code for a rule and print it //TODO
+		//Calculate the wolfram code for a rule and print it (WORKS)
+		int givenRuleNum = 22;
+		Rule rule22 = new Rule(givenRuleNum);
+		System.out.println(rule22);
+		System.out.println("What rule should binary should look like: " + String.format("%08d", Integer.parseInt(Integer.toBinaryString(givenRuleNum))));
+		System.out.println();
 		
-		//Use a rule to find the next Value of a Cell //TODO
+		//Use a rule to find the next Value of a Cell (WORKS)
+		System.out.println(Gen2.getcellState(6) + " " + Gen2.getcellState(7) + " " + Gen2.getcellState(8));
+		System.out.println(rule22.calcCellNextEvolutionVal(Gen2.getcellState(6), Gen2.getcellState(7), Gen2.getcellState(8)));
+		System.out.println("Above should be 1");
 		
-		//Use a rule to construct a new generation based on a rule //TODO
+		//Use a rule to construct a new generation based on a rule (WORKS)
+		Generation Gen2Evolution = Gen2.evolveGeneration(rule22);
+		System.out.println(Gen2Evolution);
+		System.out.println("Above should be: 000000111000000");
+		System.out.println(Gen2Evolution.evolveGeneration(rule22));
+		
 	}
 }

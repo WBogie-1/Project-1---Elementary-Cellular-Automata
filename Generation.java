@@ -23,6 +23,32 @@ public class Generation {
 		}
 	}
 	
+	//Calculate next generation value based on a given rule number //TODO
+	public Generation evolveGeneration(Rule rule) {
+		Generation nextGeneration = new Generation();
+		for(int idx = 0; idx < this.generationContents.length; ++idx) {
+			try {
+				nextGeneration.generationContents[idx].setCellValue(rule.calcCellNextEvolutionVal(this.generationContents[idx - 1].getCellState(), this.generationContents[idx].getCellState(), this.generationContents[idx + 1].getCellState()));
+			}
+			catch(Exception e){
+				if(idx == 0) {
+					nextGeneration.generationContents[idx].setCellValue(rule.calcCellNextEvolutionVal(this.generationContents[generationContents.length - 1].getCellState(), this.generationContents[idx].getCellState(), this.generationContents[idx + 1].getCellState()));
+				}
+				else{
+					nextGeneration.generationContents[idx].setCellValue(rule.calcCellNextEvolutionVal(this.generationContents[idx - 1].getCellState(), this.generationContents[idx].getCellState(), this.generationContents[0].getCellState()));
+				}
+			}
+		}
+		return nextGeneration;
+	}
+	
+	public String getcellState(int idx) {
+		String copyResult;
+		String result = this.generationContents[idx].getCellState();
+		copyResult = result;
+		return copyResult;
+	}
+	
 	//ToString method that prints out A generation in an easy to read format
 	@Override
 	public String toString() {
