@@ -32,13 +32,14 @@ public class Automaton {
 		public Automaton(String fileName) throws IOException{
 			BufferedReader br = new BufferedReader(new FileReader(fileName));
 			
-			this.rule = new Rule(Integer.parseInt(br.readLine())); 
-			
-			String[] trueFalseSplit = br.readLine().split(" ");
+			this.rule = new Rule(Integer.parseInt(br.readLine()));
+			String TF = br.readLine();
+			String[] trueFalseSplit = TF.split(" ", 2);
 			falseSymbol = trueFalseSplit[0];
 			trueSymbol = trueFalseSplit[1];
 			
 			this.generationList.add(new Generation(br.readLine()));
+			
 			
 			br.close();
 		}
@@ -51,7 +52,7 @@ public class Automaton {
 		//Evolve method that evolves the ECA a given number of steps
 		public void evolve(int numSteps) {
 			for(int idx = 0; idx < numSteps; ++idx) {
-				this.generationList.add(generationList.get(generationList.size()).evolveGeneration(this.rule));
+				this.generationList.add(generationList.get(generationList.size() - 1).evolveGeneration(this.rule));
 			}
 		}
 		
@@ -61,11 +62,16 @@ public class Automaton {
 		}
 		
 		//Getter method that returns a copy of the states of a cell after a given step returned as an Array of ints
-		public int[] getState(int stepNum) {
-			int[] state = new int[this.generationList.get(stepNum + 1).toString().length()];
+		public boolean[] getState(int stepNum) {
+			boolean[] state = new boolean[this.generationList.get(stepNum).toString().length()];
 			
 			for(int idx = 0; idx < state.length; ++idx) {
-				state[idx] = Integer.parseInt(Character.toString(this.generationList.get(stepNum + 1).toString().charAt(idx)));
+				if(this.generationList.get(stepNum).getcellState(idx) == Automaton.getFalseSymbol()) {
+					state[idx] = false;
+				}
+				else {
+					state[idx] = true;
+				}
 			}
 			return state;
 		}
@@ -73,7 +79,7 @@ public class Automaton {
 		//Getter method that returns a string representation of the contents of the cell that make up a generation after a given state
 		//using the defined true and false symbols
 		public String getStateString(int stepNum) {
-			return this.generationList.get(stepNum + 1).toString();
+			return this.generationList.get(stepNum).toString();
 		}
 		
 		//Setter method that allows you to set the True Symbol
@@ -86,13 +92,13 @@ public class Automaton {
 			falseSymbol = Character.toString(symbol);
 		}
 		
-		public static String getTrueSymbol() {
-			String copyTrueSymbol = trueSymbol;
+		public static char getTrueSymbol() {
+			char copyTrueSymbol = trueSymbol.charAt(0);
 			return copyTrueSymbol;
 		}
 		
-		public static String getFalseSymbol() {
-			String copyFalseSymbol = falseSymbol;
+		public static char getFalseSymbol() {
+			char copyFalseSymbol = falseSymbol.charAt(0);
 			return copyFalseSymbol;
 		}
 		
@@ -108,10 +114,7 @@ public class Automaton {
 				file.createNewFile();
 			}
 			
-			for(int i = 0; i < this.generationList.size(); i++) {
-				bw.write(this.toString());
-				bw.newLine();
-			}
+			bw.write(this.toString());
 			
 			bw.flush();
 			bw.close();
@@ -123,8 +126,8 @@ public class Automaton {
 		public String toString() {
 			String ECAString = "";
 			for(int idx = 0; idx < this.generationList.size(); ++idx) {
-				ECAString += "\n" + this.getStateString(idx);
+				ECAString += this.getStateString(idx) + "\n";
 			}
-			return ECAString;
+			return ECAString.trim();
 		}
 }

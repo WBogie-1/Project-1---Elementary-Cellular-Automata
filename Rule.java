@@ -6,7 +6,7 @@ public class Rule {
 	final private int RULE_CODE_DEFAULT_SIZE = 8;
 	
 	private int ruleNum;
-	private String[] ruleCodeArray = new String[RULE_CODE_DEFAULT_SIZE];
+	private char[] ruleCodeArray = new char[RULE_CODE_DEFAULT_SIZE];
 	private String ruleBinaryValue;
 	
 	//Rule constructor for rule given a rule number
@@ -17,16 +17,16 @@ public class Rule {
 		//See GitHub notes^^^
 		
 		for(int idx = 0; idx < RULE_CODE_DEFAULT_SIZE; ++idx) {
-			ruleCodeArray[idx] = String.valueOf(ruleBinaryValue.charAt(idx));
+			ruleCodeArray[idx] = ruleBinaryValue.charAt(idx);
 		}
 	}
 	
 	//Calculate cells state based on a rule index
-	public String calcCellNextEvolutionVal(String leftCell, String targetCell, String rightCell) {
+	public char calcCellNextEvolutionVal(char leftCell, char targetCell, char rightCell) {
 		
-		int leftCellValue = (leftCell.equals(Automaton.getTrueSymbol()) ? 1 : 0);
-		int targetCellValue = (targetCell.equals(Automaton.getTrueSymbol()) ? 1 : 0);
-		int rightCellValue = (rightCell.equals(Automaton.getTrueSymbol()) ? 1 : 0);
+		int leftCellValue = (leftCell == Automaton.getTrueSymbol() ? 1 : 0);
+		int targetCellValue = (targetCell == Automaton.getTrueSymbol() ? 1 : 0);
+		int rightCellValue = (rightCell == Automaton.getTrueSymbol() ? 1 : 0);
 		
 		int rulesIdx = (4 * leftCellValue + 2 * targetCellValue + rightCellValue);
 		return ruleCodeArray[7 - rulesIdx]; //this may be named differently I have not defined RuleNumber yet!
@@ -46,7 +46,7 @@ public class Rule {
 		
 		//Add the wolfram code to the result string
 		for(int idx = 0; idx < ruleCodeArray.length; ++idx) {
-			resultString += String.valueOf(ruleCodeArray[idx].toString());
+			resultString += String.valueOf(ruleCodeArray[idx]);
 		}
 		return resultString;
 	}

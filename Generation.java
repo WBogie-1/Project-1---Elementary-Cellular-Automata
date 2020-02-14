@@ -15,6 +15,14 @@ public class Generation {
 		}
 	}
 	
+	//Constructor for Generation given a number of cells which will be the length of the generationContents Array
+	public Generation(int contentsLength) {
+		this.generationContents = new Cell[contentsLength];
+		for(int idx = 0; idx < contentsLength; ++idx) {
+			generationContents[idx] = new Cell();
+		}
+	}
+	
 	//Generation constructor given a state
 	public Generation(String givenState) {
 		this.generationContents = new Cell[givenState.length()];
@@ -23,28 +31,46 @@ public class Generation {
 		}
 	}
 	
-	//Calculate next generation value based on a given rule number //TODO
+	//Calculate next generation value based on a given rule number 
 	public Generation evolveGeneration(Rule rule) {
-		Generation nextGeneration = new Generation();
+		Generation nextGeneration = new Generation(this.generationContents.length);
 		for(int idx = 0; idx < this.generationContents.length; ++idx) {
 			try {
 				nextGeneration.generationContents[idx].setCellValue(rule.calcCellNextEvolutionVal(this.generationContents[idx - 1].getCellState(), this.generationContents[idx].getCellState(), this.generationContents[idx + 1].getCellState()));
+				if(nextGeneration.generationContents[idx].getCellState() == '0'){
+					nextGeneration.generationContents[idx].setCellValue(Automaton.getFalseSymbol());
+				}
+				else {
+					nextGeneration.generationContents[idx].setCellValue(Automaton.getTrueSymbol());
+				}
 			}
 			catch(Exception e){
 				if(idx == 0) {
 					nextGeneration.generationContents[idx].setCellValue(rule.calcCellNextEvolutionVal(this.generationContents[generationContents.length - 1].getCellState(), this.generationContents[idx].getCellState(), this.generationContents[idx + 1].getCellState()));
+					if(nextGeneration.generationContents[idx].getCellState() == '0'){
+						nextGeneration.generationContents[idx].setCellValue(Automaton.getFalseSymbol());
+					}
+					else {
+						nextGeneration.generationContents[idx].setCellValue(Automaton.getTrueSymbol());
+					}
 				}
 				else{
 					nextGeneration.generationContents[idx].setCellValue(rule.calcCellNextEvolutionVal(this.generationContents[idx - 1].getCellState(), this.generationContents[idx].getCellState(), this.generationContents[0].getCellState()));
+					if(nextGeneration.generationContents[idx].getCellState() == '0'){
+						nextGeneration.generationContents[idx].setCellValue(Automaton.getFalseSymbol());
+					}
+					else {
+						nextGeneration.generationContents[idx].setCellValue(Automaton.getTrueSymbol());
+					}
 				}
 			}
 		}
 		return nextGeneration;
 	}
 	
-	public String getcellState(int idx) {
-		String copyResult;
-		String result = this.generationContents[idx].getCellState();
+	public char getcellState(int idx) {
+		char copyResult;
+		char result = this.generationContents[idx].getCellState();
 		copyResult = result;
 		return copyResult;
 	}
