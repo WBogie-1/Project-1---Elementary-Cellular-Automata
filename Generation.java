@@ -51,31 +51,14 @@ public class Generation {
 		for(int idx = 0; idx < this.generationContents.length; ++idx) {
 			try {
 				nextGeneration.generationContents[idx].setCellState(rule.calcCellNextEvolutionVal(this.generationContents[idx - 1].getCellState(), this.generationContents[idx].getCellState(), this.generationContents[idx + 1].getCellState()));
-//				if(nextGeneration.generationContents[idx].getCellState() == false){
-//					nextGeneration.generationContents[idx].setCellState(false);
-//				}
-//				else {
-//					nextGeneration.generationContents[idx].setCellState(true);
-//				}
+
 			}
 			catch(Exception e){
 				if(idx == 0) {
 					nextGeneration.generationContents[idx].setCellState(rule.calcCellNextEvolutionVal(this.generationContents[generationContents.length - 1].getCellState(), this.generationContents[idx].getCellState(), this.generationContents[idx + 1].getCellState()));
-//					if(nextGeneration.generationContents[idx].getCellState() == false){
-//						nextGeneration.generationContents[idx].setCellState(false);
-//					}
-//					else {
-//						nextGeneration.generationContents[idx].setCellState(true);
-//					}
 				}
 				else{
 					nextGeneration.generationContents[idx].setCellState(rule.calcCellNextEvolutionVal(this.generationContents[idx - 1].getCellState(), this.generationContents[idx].getCellState(), this.generationContents[0].getCellState()));
-//					if(nextGeneration.generationContents[idx].getCellState() == false){
-//						nextGeneration.generationContents[idx].setCellState(false);
-//					}
-//					else {
-//						nextGeneration.generationContents[idx].setCellState(true);
-//					}
 				}
 			}
 		}
