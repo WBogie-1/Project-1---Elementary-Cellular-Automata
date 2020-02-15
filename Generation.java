@@ -47,18 +47,18 @@ public class Generation {
 	
 	//Calculate next generation value based on a given rule number 
 	public Generation evolveGeneration(Rule rule) {
-		Generation nextGeneration = new Generation(this.generationContents.length);
-		for(int idx = 0; idx < this.generationContents.length; ++idx) {
+		Generation nextGeneration = new Generation(generationContents.length);
+		for(int idx = 0; idx < generationContents.length; ++idx) {
 			try {
-				nextGeneration.generationContents[idx].setCellState(rule.calcCellNextEvolutionVal(this.generationContents[idx - 1].getCellState(), this.generationContents[idx].getCellState(), this.generationContents[idx + 1].getCellState()));
+				nextGeneration.generationContents[idx].setCellState(rule.calcCellNextEvolutionVal(generationContents[idx - 1].getCellState(), generationContents[idx].getCellState(), generationContents[idx + 1].getCellState()));
 
 			}
 			catch(Exception e){
 				if(idx == 0) {
-					nextGeneration.generationContents[idx].setCellState(rule.calcCellNextEvolutionVal(this.generationContents[generationContents.length - 1].getCellState(), this.generationContents[idx].getCellState(), this.generationContents[idx + 1].getCellState()));
+					nextGeneration.generationContents[idx].setCellState(rule.calcCellNextEvolutionVal(generationContents[generationContents.length - 1].getCellState(), generationContents[idx].getCellState(), generationContents[idx + 1].getCellState()));
 				}
 				else{
-					nextGeneration.generationContents[idx].setCellState(rule.calcCellNextEvolutionVal(this.generationContents[idx - 1].getCellState(), this.generationContents[idx].getCellState(), this.generationContents[0].getCellState()));
+					nextGeneration.generationContents[idx].setCellState(rule.calcCellNextEvolutionVal(generationContents[idx - 1].getCellState(), generationContents[idx].getCellState(), generationContents[0].getCellState()));
 				}
 			}
 		}

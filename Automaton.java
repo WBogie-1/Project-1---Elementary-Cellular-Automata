@@ -39,13 +39,13 @@ public class Automaton {
 		
 		//getter method that returns ruleNum using helper method from rule
 		public int getRuleNum() {
-			return this.rule.getRuleNum();
+			return rule.getRuleNum();
 		}
 		
 		//Evolve method that evolves the ECA a given number of steps
 		public void evolve(int numSteps) {
 			for(int idx = 0; idx < numSteps; ++idx) {
-				this.generationList.add(generationList.get(generationList.size() - 1).evolveGeneration(rule));
+				generationList.add(generationList.get(generationList.size() - 1).evolveGeneration(rule));
 			}
 		}
 		
@@ -118,8 +118,8 @@ public class Automaton {
 		@Override
 		public String toString() {
 			String ECAString = "";
-			for(int idx = 0; idx < this.generationList.size(); ++idx) {
-				ECAString += this.getStateString(idx) + "\n";
+			for(int idx = 0; idx < generationList.size(); ++idx) {
+				ECAString += getStateString(idx) + "\n";
 			}
 			return ECAString.trim();
 		}

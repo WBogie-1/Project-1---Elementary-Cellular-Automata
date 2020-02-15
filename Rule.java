@@ -39,14 +39,14 @@ public class Rule {
 	
 	//Getter method that returns a copy of the ruleNum, helper for Automaton getRuleNum()
 	public int getRuleNum() {
-		int copyRuleNum = this.ruleNum;
+		int copyRuleNum = ruleNum;
 		return copyRuleNum;
 	}
 	
 	//toString method that return in format "RuleNum: rulenum WolframCode: ruleWolframCode
 	@Override
 	public String toString() {
-		String ruleNumCopy = String.valueOf(this.ruleNum);
+		String ruleNumCopy = String.valueOf(ruleNum);
 		String resultString = "Rule Number: " + ruleNumCopy + " Wolfram Code: ";
 		
 		//Add the wolfram code to the result string
