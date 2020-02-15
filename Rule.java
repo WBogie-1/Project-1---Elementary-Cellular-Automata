@@ -22,15 +22,20 @@ public class Rule {
 	}
 	
 	//Calculate cells state based on a rule index
-	public char calcCellNextEvolutionVal(char leftCell, char targetCell, char rightCell) {
+	public boolean calcCellNextEvolutionVal(boolean leftCell, boolean targetCell, boolean rightCell) {
 		
-		int leftCellValue = (leftCell == Automaton.getTrueSymbol() ? 1 : 0);
-		int targetCellValue = (targetCell == Automaton.getTrueSymbol() ? 1 : 0);
-		int rightCellValue = (rightCell == Automaton.getTrueSymbol() ? 1 : 0);
+		int leftCellValue = (leftCell == true ? 1 : 0);
+		int targetCellValue = (targetCell == true ? 1 : 0);
+		int rightCellValue = (rightCell == true ? 1 : 0);
 		
 		int rulesIdx = (4 * leftCellValue + 2 * targetCellValue + rightCellValue);
-		return ruleCodeArray[7 - rulesIdx]; //this may be named differently I have not defined RuleNumber yet!
+		if(ruleCodeArray[7 - rulesIdx] == '1') {
+			return true;
 		}
+		else {
+			return false;
+		}
+	}
 	
 	//Getter method that returns a copy of the ruleNum, helper for Automaton getRuleNum()
 	public int getRuleNum() {

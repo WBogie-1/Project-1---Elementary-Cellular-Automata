@@ -11,22 +11,15 @@ import java.util.ArrayList;
  */
 public class Automaton {
 
-		private static String falseSymbol = "0";
-		private static String trueSymbol = "1";
+		private char falseSymbol = '0';
+		private char trueSymbol = '1';
 		private Rule rule;
 		private ArrayList<Generation> generationList = new ArrayList<Generation>();
 		
 		public Automaton(int ruleNum, boolean[] initState) {
-			String[] convertedTFArray = new String[initState.length];
-			String initStateConverted = "";
+			rule = new Rule(ruleNum);
 			
-			this.rule = new Rule(ruleNum);
-			for(int idx = 0; idx < initState.length; ++idx) {
-				convertedTFArray[idx] = (initState[idx] == true ? trueSymbol : falseSymbol);
-				initStateConverted += convertedTFArray[idx];
-			}
-			
-			this.generationList.add(new Generation(initStateConverted));
+			generationList.add(new Generation(initState));
 		}
 		
 		public Automaton(String fileName) throws IOException{
@@ -35,10 +28,10 @@ public class Automaton {
 			this.rule = new Rule(Integer.parseInt(br.readLine()));
 			String TF = br.readLine();
 			String[] trueFalseSplit = TF.split(" ", 2);
-			falseSymbol = trueFalseSplit[0];
-			trueSymbol = trueFalseSplit[1];
+			falseSymbol = trueFalseSplit[0].charAt(0);
+			trueSymbol = trueFalseSplit[1].charAt(0);
 			
-			this.generationList.add(new Generation(br.readLine()));
+			this.generationList.add(new Generation(br.readLine(), trueSymbol, falseSymbol));
 			
 			
 			br.close();
@@ -52,7 +45,7 @@ public class Automaton {
 		//Evolve method that evolves the ECA a given number of steps
 		public void evolve(int numSteps) {
 			for(int idx = 0; idx < numSteps; ++idx) {
-				this.generationList.add(generationList.get(generationList.size() - 1).evolveGeneration(this.rule));
+				this.generationList.add(generationList.get(generationList.size() - 1).evolveGeneration(rule));
 			}
 		}
 		
@@ -61,44 +54,44 @@ public class Automaton {
 			return this.generationList.size() - 1;
 		}
 		
-		//Getter method that returns a copy of the states of a cell after a given step returned as an Array of ints
+		//Getter method that returns a copy of the states of the cells in a generation after a given step
 		public boolean[] getState(int stepNum) {
-			boolean[] state = new boolean[this.generationList.get(stepNum).toString().length()];
-			
-			for(int idx = 0; idx < state.length; ++idx) {
-				if(this.generationList.get(stepNum).getcellState(idx) == Automaton.getFalseSymbol()) {
-					state[idx] = false;
-				}
-				else {
-					state[idx] = true;
-				}
-			}
-			return state;
+			boolean[] copyState = generationList.get(stepNum).getGenerationState();
+			return copyState;
 		}
 		
 		//Getter method that returns a string representation of the contents of the cell that make up a generation after a given state
 		//using the defined true and false symbols
 		public String getStateString(int stepNum) {
-			return this.generationList.get(stepNum).toString();
+			String stateString = "";
+			for(boolean state : generationList.get(stepNum).getGenerationState()) {
+				if(state == true) {
+					stateString += trueSymbol;
+				}
+				else {
+					stateString += falseSymbol;
+				}
+			}
+			return stateString.trim();
 		}
 		
 		//Setter method that allows you to set the True Symbol
-		public static void setTrueSymbol(char symbol) {
-			trueSymbol = Character.toString(symbol);
+		public void setTrueSymbol(char symbol) {
+			trueSymbol = symbol;
 		}
 		
 		//Setter method that allows you to set the False Symbol
-		public static void setFalseSymbol(char symbol) {
-			falseSymbol = Character.toString(symbol);
+		public void setFalseSymbol(char symbol) {
+			falseSymbol = symbol;
 		}
 		
-		public static char getTrueSymbol() {
-			char copyTrueSymbol = trueSymbol.charAt(0);
+		public char getTrueSymbol() {
+			char copyTrueSymbol = trueSymbol;
 			return copyTrueSymbol;
 		}
 		
-		public static char getFalseSymbol() {
-			char copyFalseSymbol = falseSymbol.charAt(0);
+		public char getFalseSymbol() {
+			char copyFalseSymbol = falseSymbol;
 			return copyFalseSymbol;
 		}
 		

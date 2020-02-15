@@ -23,11 +23,25 @@ public class Generation {
 		}
 	}
 	
-	//Generation constructor given a state
-	public Generation(String givenState) {
+	//Generation constructor given an initial state array full of boolean values
+	public Generation(boolean[] initState) {
+		this.generationContents = new Cell[initState.length];
+		
+		for(int idx = 0; idx < initState.length; ++idx) {
+			generationContents[idx] = new Cell(initState[idx]);
+		}
+	}
+	
+	//Generation constructor given a state that is not represented in boolean form
+	public Generation(String givenState, char trueSymbol, char falseSymbol) {
 		this.generationContents = new Cell[givenState.length()];
 		for(int idx = 0; idx < generationContents.length; ++idx) {
-			generationContents[idx] = new Cell(givenState.charAt(idx));
+			if(givenState.charAt(idx) == trueSymbol) {
+				generationContents[idx] = new Cell(true);
+			}
+			else {
+				generationContents[idx] = new Cell(false);
+			}
 		}
 	}
 	
@@ -36,43 +50,53 @@ public class Generation {
 		Generation nextGeneration = new Generation(this.generationContents.length);
 		for(int idx = 0; idx < this.generationContents.length; ++idx) {
 			try {
-				nextGeneration.generationContents[idx].setCellValue(rule.calcCellNextEvolutionVal(this.generationContents[idx - 1].getCellState(), this.generationContents[idx].getCellState(), this.generationContents[idx + 1].getCellState()));
-				if(nextGeneration.generationContents[idx].getCellState() == '0'){
-					nextGeneration.generationContents[idx].setCellValue(Automaton.getFalseSymbol());
-				}
-				else {
-					nextGeneration.generationContents[idx].setCellValue(Automaton.getTrueSymbol());
-				}
+				nextGeneration.generationContents[idx].setCellState(rule.calcCellNextEvolutionVal(this.generationContents[idx - 1].getCellState(), this.generationContents[idx].getCellState(), this.generationContents[idx + 1].getCellState()));
+//				if(nextGeneration.generationContents[idx].getCellState() == false){
+//					nextGeneration.generationContents[idx].setCellState(false);
+//				}
+//				else {
+//					nextGeneration.generationContents[idx].setCellState(true);
+//				}
 			}
 			catch(Exception e){
 				if(idx == 0) {
-					nextGeneration.generationContents[idx].setCellValue(rule.calcCellNextEvolutionVal(this.generationContents[generationContents.length - 1].getCellState(), this.generationContents[idx].getCellState(), this.generationContents[idx + 1].getCellState()));
-					if(nextGeneration.generationContents[idx].getCellState() == '0'){
-						nextGeneration.generationContents[idx].setCellValue(Automaton.getFalseSymbol());
-					}
-					else {
-						nextGeneration.generationContents[idx].setCellValue(Automaton.getTrueSymbol());
-					}
+					nextGeneration.generationContents[idx].setCellState(rule.calcCellNextEvolutionVal(this.generationContents[generationContents.length - 1].getCellState(), this.generationContents[idx].getCellState(), this.generationContents[idx + 1].getCellState()));
+//					if(nextGeneration.generationContents[idx].getCellState() == false){
+//						nextGeneration.generationContents[idx].setCellState(false);
+//					}
+//					else {
+//						nextGeneration.generationContents[idx].setCellState(true);
+//					}
 				}
 				else{
-					nextGeneration.generationContents[idx].setCellValue(rule.calcCellNextEvolutionVal(this.generationContents[idx - 1].getCellState(), this.generationContents[idx].getCellState(), this.generationContents[0].getCellState()));
-					if(nextGeneration.generationContents[idx].getCellState() == '0'){
-						nextGeneration.generationContents[idx].setCellValue(Automaton.getFalseSymbol());
-					}
-					else {
-						nextGeneration.generationContents[idx].setCellValue(Automaton.getTrueSymbol());
-					}
+					nextGeneration.generationContents[idx].setCellState(rule.calcCellNextEvolutionVal(this.generationContents[idx - 1].getCellState(), this.generationContents[idx].getCellState(), this.generationContents[0].getCellState()));
+//					if(nextGeneration.generationContents[idx].getCellState() == false){
+//						nextGeneration.generationContents[idx].setCellState(false);
+//					}
+//					else {
+//						nextGeneration.generationContents[idx].setCellState(true);
+//					}
 				}
 			}
 		}
 		return nextGeneration;
 	}
 	
-	public char getcellState(int idx) {
-		char copyResult;
-		char result = this.generationContents[idx].getCellState();
+	public boolean getcellState(int idx) {
+		boolean copyResult;
+		boolean result = this.generationContents[idx].getCellState();
 		copyResult = result;
 		return copyResult;
+	}
+	
+	//returns a boolean[] representation of the state of every cell in a generation
+	public boolean[] getGenerationState() {
+		boolean[] copyStateList = new boolean[generationContents.length];
+		
+		for(int idx = 0; idx < copyStateList.length; ++idx) {
+			copyStateList[idx] = generationContents[idx].getCellState();
+		}
+		return copyStateList;
 	}
 	
 	//ToString method that prints out A generation in an easy to read format
