@@ -2,18 +2,8 @@
  * 
  */
 public class Generation {
-	
-	final private int DEFAULT_GENERATION_SIZE = 15; //TODO This might need to change
 
 	private Cell[] generationContents;
-	
-	//Default constuctor for Generation
-	public Generation() {
-		this.generationContents = new Cell[DEFAULT_GENERATION_SIZE];
-		for(int idx = 0; idx < DEFAULT_GENERATION_SIZE; ++idx) {
-			generationContents[idx] = new Cell();
-		}
-	}
 	
 	//Constructor for Generation given a number of cells which will be the length of the generationContents Array
 	public Generation(int contentsLength) {

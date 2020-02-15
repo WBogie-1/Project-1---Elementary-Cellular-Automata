@@ -111,6 +111,7 @@ public class Driver {
 		System.out.println("Test 5: ");
 		System.out.println("Test 5 Before Symbol Change: ");
 		System.out.println(test5);
+		System.out.println();
 		
 		test5.setFalseSymbol('.');
 		test5.setTrueSymbol('$');
