@@ -80,7 +80,10 @@ public class Rule {
 	 */
 	@Override
 	public String toString() {
+		
+		//Get a String representation of the rule number
 		String ruleNumCopy = String.valueOf(ruleNum);
+		//Create the result string in the given format
 		String resultString = "Rule Number: " + ruleNumCopy + " Wolfram Code: ";
 		
 		//Add the wolfram code to the result string
