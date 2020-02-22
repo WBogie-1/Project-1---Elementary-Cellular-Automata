@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * This class is the superclass for the generation class and will be used to generate an Automaton based on a give rule
+ * This class is the will be used to generate an Automaton based on a give rule that is made up of an ArrayList of generation objects and a rule object
  * The class can also be used to change the symbols representing true/false in the automaton along with saving a loading
  * Automatons to and from a file.
  * @author Carter Bogie
